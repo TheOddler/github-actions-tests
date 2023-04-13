@@ -24,8 +24,10 @@ jobs:
       uses: octokit/request-action@v2.1.0
       id: enforce_admin_protection
       with:
-        route: GET /repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/enforce_admins
-        branch: 
+        route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+        owner: TheOddler
+        repo: github-actions-tests
+        branch: ${{ github.event.inputs.branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
@@ -48,6 +50,9 @@ jobs:
       uses: octokit/request-action@v2.1.0
       id: remove_admin_protection
       with:
-        route: DELETE /repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/enforce_admins
+        route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+        owner: TheOddler
+        repo: github-actions-tests
+        branch: ${{ github.event.inputs.branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
