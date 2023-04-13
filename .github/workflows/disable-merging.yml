@@ -11,8 +11,8 @@ on:
 
 jobs:
   disable-merging:
+    name: Disable Merging
     runs-on: ubuntu-latest
-
     steps:
     - name: Enforce admin protection
       uses: octokit/request-action@v2.1.0
@@ -24,11 +24,21 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+  wait:
+    name: Wait
+    needs: disable-merging
+    runs-on: ubuntu-latest
+    steps:
     - name: Wait the allotted time
       uses: jakejarvis/wait-action@master
       with:
         time: '${{ github.event.inputs.duration }}'
 
+  reenable-merging:
+    name: Reenable Merging
+    needs: wait
+    runs-on: ubuntu-latest
+    steps:
     - name: Removed the admin protection
       uses: octokit/request-action@v2.1.0
       id: remove_admin_protection
