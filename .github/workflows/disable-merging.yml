@@ -21,7 +21,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-    - name: Removed the admin protection
+    - name: Enforce the admin protection
       uses: octokit/request-action@v2.1.0
       id: remove_admin_protection
       with:
@@ -47,7 +47,7 @@ jobs:
     needs: wait
     runs-on: ubuntu-latest
     steps:
-    - name: Removed the admin protection
+    - name: Remove the admin protection
       uses: octokit/request-action@v2.1.0
       id: remove_admin_protection
       with:
