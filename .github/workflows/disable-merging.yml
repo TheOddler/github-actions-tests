@@ -15,9 +15,9 @@ jobs:
 
     steps:
     - uses: octokit/request-action@v2.x
-      id: create_check_run
+      id: enforce_admin_protection
       with:
-        name: Enforce admin protection for master branch
+        name: Enforce admin protection
         route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
         owner: ${{ github.event.repository.owner }}
         repo: ${{ github.event.repository.name }}
@@ -31,9 +31,9 @@ jobs:
         time: '${{ github.event.inputs.duration }}'
 
     - uses: octokit/request-action@v2.x
-      id: create_check_run
+      id: remove_admin_protection
       with:
-        name: Removed the admin protection for master branch
+        name: Removed the admin protection
         route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
         owner: ${{ github.event.repository.owner }}
         repo: ${{ github.event.repository.name }}
