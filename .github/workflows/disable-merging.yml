@@ -30,7 +30,7 @@ jobs:
         repo: github-actions-tests
         branch: ${{ github.event.inputs.branch }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_PAT }}
     
   wait:
     name: Wait
@@ -56,4 +56,4 @@ jobs:
         repo: github-actions-tests
         branch: ${{ github.event.inputs.branch }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_PAT }}
