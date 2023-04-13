@@ -1,7 +1,12 @@
-# GITHUB_TOKEN is required to be set to read/write permissions (default seems to be read only): https://github.com/TheOddler/github-actions-tests/settings/actions
+# How this works:
+# When running the script, it enables the PR merge requirement so that a review by a code-owner is needed
+# Most devs aren't code-owners, so PR's can't be merged.
 
-# Requires branch to be protected: https://github.com/TheOddler/github-actions-tests/settings/branches
-# How protected doesn't really matter I think.
+# The script needs:
+
+# 1) The branch to be protected: https://github.com/TheOddler/github-actions-tests/settings/branches
+# 2) The setting for "Require approvals" to be enabled (otherwise it will set it to 1)
+# 3) A PAT token (currently called `MY_PAT`) with enough access rights
 
 name: Disable merging
 
@@ -31,8 +36,8 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.MY_PAT }}"\
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection \
-          -d '{"lock_branch":true}'
+          https://api.github.com/repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/required_pull_request_reviews \
+          -d '{"require_code_owner_reviews":true}'
     
   wait:
     name: Wait
@@ -57,5 +62,5 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.MY_PAT }}"\
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection \
-          -d '{"lock_branch":false}'
+          https://api.github.com/repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/required_pull_request_reviews \
+          -d '{"require_code_owner_reviews":false}'
