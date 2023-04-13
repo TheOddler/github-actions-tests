@@ -1,3 +1,5 @@
+# GITHUB_TOKEN is required to be set to read/write permissions (default seems to be read only): https://github.com/TheOddler/github-actions-tests/settings/actions
+
 name: Disable merging
 
 on:
