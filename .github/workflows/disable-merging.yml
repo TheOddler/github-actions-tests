@@ -4,10 +4,10 @@ on:
   # Manual trigger
   workflow_dispatch:
     inputs:
-     duration:
-       description: 'How long to disable merging. Suffix may be 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days.'
-       default: '3h'
-       required: true
+      duration:
+        description: 'How long to disable merging. Suffix may be 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days.'
+        default: '3h'
+        required: true
 
 jobs:
   disable-merging:
