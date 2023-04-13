@@ -8,6 +8,11 @@
 # 2) The setting for "Require approvals" to be enabled (otherwise it will set it to 1)
 # 3) A PAT token (currently called `MY_PAT`) with enough access rights
 
+# What would be better:
+# Toggling the `locked` protection, but that can't be done through API (the API that allows setting the locked protection requires you to set a bunch of other stuff too, which I don't want to override)
+
+# Alt: You can just manually check the `locked` toggle and all is good.
+
 name: Disable merging
 
 on:
