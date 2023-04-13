@@ -18,6 +18,7 @@ on:
 jobs:
   disable-merging:
     name: Disable Merging
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - name: Enforce admin protection
