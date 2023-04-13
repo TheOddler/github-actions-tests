@@ -18,9 +18,8 @@ jobs:
       id: enforce_admin_protection
       with:
         name: Enforce admin protection
-        route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-        owner: ${{ github.event.repository.owner }}
-        repo: ${{ github.event.repository.name }}
+        route: POST /repos/{repo}/branches/{branch}/protection/enforce_admins
+        repo: ${{ github.repository }}
         branch: ${{ github.event.workflow_run.head_branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,9 +33,8 @@ jobs:
       id: remove_admin_protection
       with:
         name: Removed the admin protection
-        route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
-        owner: ${{ github.event.repository.owner }}
-        repo: ${{ github.event.repository.name }}
+        route: DELETE /repos/{repo}/branches/{branch}/protection/enforce_admins
+        repo: ${{ github.repository }}
         branch: ${{ github.event.workflow_run.head_branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
