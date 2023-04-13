@@ -21,8 +21,8 @@ jobs:
         route: POST /repos/{repo}/branches/{branch}/protection/enforce_admins
         repo: ${{ github.repository }}
         branch: ${{ github.event.workflow_run.head_branch }}
-      # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
   wait:
     name: Wait
