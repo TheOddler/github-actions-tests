@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: octokit/request-action@v2.x
+    - name: Enforce admin protection
+      uses: octokit/request-action@v2.1.0
       id: enforce_admin_protection
       with:
-        name: Enforce admin protection
         route: POST /repos/{repo}/branches/{branch}/protection/enforce_admins
         repo: ${{ github.repository }}
         branch: ${{ github.event.workflow_run.head_branch }}
@@ -29,10 +29,10 @@ jobs:
       with:
         time: '${{ github.event.inputs.duration }}'
 
-    - uses: octokit/request-action@v2.x
+    - name: Removed the admin protection
+      uses: octokit/request-action@v2.1.0
       id: remove_admin_protection
       with:
-        name: Removed the admin protection
         route: DELETE /repos/{repo}/branches/{branch}/protection/enforce_admins
         repo: ${{ github.repository }}
         branch: ${{ github.event.workflow_run.head_branch }}
