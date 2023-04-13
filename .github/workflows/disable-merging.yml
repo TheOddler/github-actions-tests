@@ -17,10 +17,11 @@ jobs:
     - uses: octokit/request-action@v2.x
       id: create_check_run
       with:
-        route: POST /repos/{repo}/branches/{branch}/protection/enforce_admins
-        repo: ${{ GITHUB_REPOSITORY }}
-        branch: master
         name: Enforce admin protection for master branch
+        route: POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+        owner: ${{ github.event.repository.owner }}
+        repo: ${{ github.event.repository.name }}
+        branch: ${{ github.event.workflow_run.head_branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
@@ -32,9 +33,10 @@ jobs:
     - uses: octokit/request-action@v2.x
       id: create_check_run
       with:
-        route: DELETE /repos/{repo}/branches/{branch}/protection/enforce_admins
-        repo: ${{ GITHUB_REPOSITORY }}
-        branch: master
         name: Removed the admin protection for master branch
+        route: DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins
+        owner: ${{ github.event.repository.owner }}
+        repo: ${{ github.event.repository.name }}
+        branch: ${{ github.event.workflow_run.head_branch }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
