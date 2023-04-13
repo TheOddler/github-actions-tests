@@ -47,6 +47,7 @@ jobs:
   reenable-merging:
     name: Reenable Merging
     needs: wait
+    if: always() # Run this even if "wait" fails or is cancelled
     runs-on: ubuntu-latest
     steps:
     - name: Remove the admin protection
