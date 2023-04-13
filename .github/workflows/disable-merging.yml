@@ -24,7 +24,7 @@ jobs:
       uses: octokit/request-action@v2.1.0
       id: enforce_admin_protection
       with:
-        route: POST /repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/enforce_admins
+        route: GET /repos/${{ github.repository }}/branches/${{ github.event.inputs.branch }}/protection/enforce_admins
         branch: 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
