@@ -54,8 +54,23 @@ jobs:
         owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
     - name: Lock branch
-      run: |
-        echo 'id: ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }}'
+      uses: octokit/graphql-action@v2.2.1
+      id: lock_branch
+      with:
+        query: |
+          query lockBranch($ruleid:Id!) {
+            updateBranchProtectionRule(input:{
+              branchProtectionRuleId: $ruleid,
+              lockBranch: true
+            }) {
+              branchProtectionRule {
+                id
+                lockBranch
+                clientMutationId
+              }
+            }
+          }
+        ruleid: ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }}
 
   # wait:
   #   name: Wait
