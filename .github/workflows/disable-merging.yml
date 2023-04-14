@@ -36,12 +36,11 @@ jobs:
     steps:
     - name: Enforce the admin protection
       run: |
-        curl --fail-with-body \
-          -X POST
+        curl --fail-with-body -L \
+          -X POST \
           -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -d $QUERY \
-
           https://api.github.com/graphql \
+          -d $QUERY
       env:
         QUERY: |
           {
