@@ -33,9 +33,12 @@ jobs:
     name: Disable Merging
     permissions: write-all
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.MY_PAT }}
     steps:
-    - name: Lock branch
+    - name: Get branch protection rule id
       uses: octokit/graphql-action@v2.2.1
+      id: get_id
       with:
         query: |
           query getBranchProtectionRules($owner:String!,$repo:String!) {
@@ -50,8 +53,9 @@ jobs:
           }
         owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+    - name: Lock branch
+      run: |
+        echo 'output: ${{ steps.get_id.outputs.data }}'
 
   # wait:
   #   name: Wait
