@@ -34,24 +34,24 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-    - name: Enforce the admin protection
-      run: |
-        curl --fail-with-body -L \
-          -X POST \
-          -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/graphql \
-          -d @- <<BODY
-            {
-              repository(owner: "TheOddler", name: "github-actions-tests") {
-                branchProtectionRules(first: 1) {
-                  nodes {
-                    pattern
-                    id
-                  }
+    - name: Lock branch
+      uses: octokit/graphql-action@v2.2.1
+      with:
+        query: |
+          query getBranchProtectionRules($owner:String!,$repo:String!) {
+            repository(owner:$owner, name:$repo) {
+              branchProtectionRules(first: 1) {
+                nodes {
+                  pattern
+                  id
                 }
               }
             }
-          BODY
+          }
+        owner: ${{ github.event.repository.owner.name }}
+        repo: ${{ github.event.repository.name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # wait:
   #   name: Wait
