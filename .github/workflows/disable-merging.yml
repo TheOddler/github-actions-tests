@@ -29,16 +29,16 @@ on:
         required: true
 
 jobs:
-  disable-merging:
-    name: Disable Merging
-    permissions: write-all
+  find_protection_rule:
+    name: Finding the protection rule
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+    id: get_id
+    outputs:
+      protection_rule_id: ${{ steps.get_protection_rule_id.outputs }}
     steps:
-    - name: Get branch protection rule id
-      uses: octokit/graphql-action@v2.2.1
-      id: get_id
+    - uses: octokit/graphql-action@v2.2.1
       with:
         query: |
           query getBranchProtectionRules($owner:String!,$repo:String!) {
@@ -53,6 +53,20 @@ jobs:
           }
         owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
+    - name: Parse json and get ID
+      id: get_protection_rule_id
+      run: |
+        echo ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }} >> "$GITHUB_OUTPUT"
+    
+
+
+  disable-merging:
+    name: Disable Merging
+    runs-on: ubuntu-latest
+    needs: get_id
+    env:
+      GITHUB_TOKEN: ${{ secrets.MY_PAT }}
+    steps:
     - name: Lock branch
       uses: octokit/graphql-action@v2.2.1
       id: lock_branch
@@ -70,7 +84,7 @@ jobs:
               clientMutationId
             }
           }
-        ruleid: ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }}
+        ruleid: ${{ needs.get_id.outputs.protection_rule_id }}
 
   # wait:
   #   name: Wait
