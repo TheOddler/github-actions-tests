@@ -40,19 +40,18 @@ jobs:
           -X POST \
           -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/graphql \
-          -d ${{ echo $QUERY }}
-      env:
-        QUERY: |
-          {
-            repository(owner: "TheOddler", name: "github-actions-tests") {
-              branchProtectionRules(first: 1) {
-                nodes {
-                  pattern
-                  id
+          -d @- <<BODY
+            {
+              repository(owner: "TheOddler", name: "github-actions-tests") {
+                branchProtectionRules(first: 1) {
+                  nodes {
+                    pattern
+                    id
+                  }
                 }
               }
             }
-          }
+          BODY
 
   # wait:
   #   name: Wait
