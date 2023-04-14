@@ -66,8 +66,8 @@ jobs:
               branchProtectionRule {
                 id
                 lockBranch
-                clientMutationId
               }
+              clientMutationId
             }
           }
         ruleid: ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }}
