@@ -35,7 +35,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.MY_PAT }}
     outputs:
-      protection_rule_id: ${{ steps.parse_id.outputs }}
+      protection_rule_id: ${{ steps.parse_id.outputs.id }}
     steps:
     - uses: octokit/graphql-action@v2.2.1
       id: graphql_query
@@ -56,7 +56,7 @@ jobs:
     - name: Parse json and get ID
       id: parse_id
       run: |
-        echo ${{ fromJson(steps.graphql_query.outputs.data).repository.branchProtectionRules.nodes[0].id }} >> "$GITHUB_OUTPUT"
+        echo "id=${{ fromJson(steps.graphql_query.outputs.data).repository.branchProtectionRules.nodes[0].id }}" >> "$GITHUB_OUTPUT"
     
 
 
