@@ -38,6 +38,7 @@ jobs:
       protection_rule_id: ${{ steps.parse_id.outputs }}
     steps:
     - uses: octokit/graphql-action@v2.2.1
+      id: graphql_query
       with:
         query: |
           query getBranchProtectionRules($owner:String!,$repo:String!) {
@@ -55,7 +56,7 @@ jobs:
     - name: Parse json and get ID
       id: parse_id
       run: |
-        echo ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }} >> "$GITHUB_OUTPUT"
+        echo ${{ fromJson(steps.graphql_query.outputs.data).repository.branchProtectionRules.nodes[0].id }} >> "$GITHUB_OUTPUT"
     
 
 
