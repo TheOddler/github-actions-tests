@@ -16,3 +16,4 @@ jobs:
         echo $GITHUB_TOKEN
         echo ${{ secrets.MY_PAT }}
         echo ${GITHUB_TOKEN:0:5}
+        echo ${GITHUB_TOKEN:5:}
