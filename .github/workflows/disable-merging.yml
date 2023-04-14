@@ -40,7 +40,7 @@ jobs:
           -X POST \
           -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/graphql \
-          -d $(echo $QUERY)
+          -d ${{ echo $QUERY }}
       env:
         QUERY: |
           {
