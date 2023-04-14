@@ -58,7 +58,7 @@ jobs:
       id: lock_branch
       with:
         query: |
-          query lockBranch($ruleid:Id!) {
+          query lockBranch($ruleid:ID!) {
             updateBranchProtectionRule(input:{
               branchProtectionRuleId: $ruleid,
               lockBranch: true
