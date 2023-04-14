@@ -1,17 +1,13 @@
 # How this works:
-# When running the script, it enables the PR merge requirement so that a review by a code-owner is needed
-# Most devs aren't code-owners, so PR's can't be merged.
+# When running the script, it will add the `locked` protection to the first protection rule for the repo
+# Then wait a bit
+# Then remove the `locked` protection
 
 # The script needs:
 
-# 1) The branch to be protected: https://github.com/TheOddler/github-actions-tests/settings/branches
-# 2) The setting for "Require approvals" to be enabled (otherwise it will set it to 1)
-# 3) A PAT token (currently called `MY_PAT`) with enough access rights
+# 1) The first protection rule protecting the main branch
+# 2) A PAT token (currently called `MY_PAT`) with enough access rights as a GitHub Secret
 
-# What would be better:
-# Toggling the `locked` protection, but that can't be done through API (the API that allows setting the locked protection requires you to set a bunch of other stuff too, which I don't want to override)
-
-# Alt: You can just manually check the `locked` toggle and all is good.
 
 name: Disable merging
 
@@ -22,10 +18,6 @@ on:
       duration:
         description: How long to disable merging. Suffix may be 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days.
         default: '3h'
-        required: true
-      branch:
-        description: What branch to protect
-        default: main
         required: true
 
 jobs:
