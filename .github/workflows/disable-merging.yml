@@ -55,7 +55,7 @@ jobs:
         repo: ${{ github.event.repository.name }}
     - name: Lock branch
       run: |
-        echo 'output: ${{ steps.get_id.outputs.data }}'
+        echo 'id: ${{ fromJson(steps.get_id.outputs.data).repository.branchProtectionRules.nodes[0].id }}'
 
   # wait:
   #   name: Wait
